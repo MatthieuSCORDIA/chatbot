@@ -12,8 +12,3 @@ def list_of_files(directory, extension):
         if filename.endswith(extension):
             files_names.append(filename)
     return files_names
-
-
-directory = "speeches-20231119.zip"
-files_names = list_of_files(directory, "txt")
-print_list(files_names)
