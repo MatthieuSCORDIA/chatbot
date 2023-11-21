@@ -1,4 +1,5 @@
 import os
+directory = "speeches-20231119"  # séléction du dossier
 
 
 def print_list(lists_printer):
@@ -15,7 +16,7 @@ def list_of_files(directory, extension):
 
 
 def print_president():
-    files_names_president = list_of_files("speeches-20231119", "txt")
+    files_names_president = list_of_files(directory, "txt")
     for boucle1_president in range(len(files_names_president)):
         files_names_president[boucle1_president] = files_names_president[boucle1_president].replace("Nomination_", "")
         files_names_president[boucle1_president] = files_names_president[boucle1_president].replace(".txt", "")
