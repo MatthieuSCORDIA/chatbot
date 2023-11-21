@@ -15,9 +15,7 @@ def list_of_files(directory, extension):
 
 
 def print_president():
-    from main import files_names
-    files_names_president = files_names
-    print(files_names_president)
+    files_names_president = list_of_files("speeches-20231119", "txt")
     for boucle1_president in range(len(files_names_president)):
         files_names_president[boucle1_president] = files_names_president[boucle1_president].replace("Nomination_", "")
         files_names_president[boucle1_president] = files_names_president[boucle1_president].replace(".txt", "")
