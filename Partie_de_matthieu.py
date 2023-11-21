@@ -30,4 +30,15 @@ def print_president():
                 del files_names_president[boucle2_president]
             boucle2_president += 1
         boucle1_president += 1
+    for boucle1_president in range(len(files_names_president)):
+        if files_names_president[boucle1_president] == "Chirac":
+            files_names_president[boucle1_president] = "Jaques " + files_names_president[boucle1_president]
+        elif files_names_president[boucle1_president] == "Giscard dEstaing":
+            files_names_president[boucle1_president] = "Valery " + files_names_president[boucle1_president]
+        elif files_names_president[boucle1_president] == "Hollande" or files_names_president[boucle1_president] == "Mitterrand":
+            files_names_president[boucle1_president] = "François " + files_names_president[boucle1_president]
+        elif files_names_president[boucle1_president] == "Macron":
+            files_names_president[boucle1_president] = "Emmanuel " + files_names_president[boucle1_president]
+        elif files_names_president[boucle1_president] == "Sarkozy":
+            files_names_president[boucle1_president] = "Nicolas " + files_names_president[boucle1_president]
     print_list(files_names_president)
