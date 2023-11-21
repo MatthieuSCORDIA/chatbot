@@ -28,7 +28,7 @@ def print_president():
         while boucle2_president < len(files_names_president):
             if boucle1_president != boucle2_president and files_names_president[boucle1_president] == \
                     files_names_president[boucle2_president]:
-                files_names_president.pop(boucle2_president)
+                del files_names_president[boucle2_president]
             boucle2_president += 1
         boucle1_president += 1
     print_list(files_names_president)
