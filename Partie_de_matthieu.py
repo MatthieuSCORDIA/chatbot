@@ -1,4 +1,5 @@
 import os
+
 directory = "speeches-20231119"  # séléction du dossier
 
 
@@ -36,10 +37,17 @@ def print_president():
             files_names_president[boucle1_president] = "Jaques " + files_names_president[boucle1_president]
         elif files_names_president[boucle1_president] == "Giscard dEstaing":
             files_names_president[boucle1_president] = "Valery " + files_names_president[boucle1_president]
-        elif files_names_president[boucle1_president] == "Hollande" or files_names_president[boucle1_president] == "Mitterrand":
+        elif files_names_president[boucle1_president] == "Hollande" or files_names_president[
+            boucle1_president] == "Mitterrand":
             files_names_president[boucle1_president] = "François " + files_names_president[boucle1_president]
         elif files_names_president[boucle1_president] == "Macron":
             files_names_president[boucle1_president] = "Emmanuel " + files_names_president[boucle1_president]
         elif files_names_president[boucle1_president] == "Sarkozy":
             files_names_president[boucle1_president] = "Nicolas " + files_names_president[boucle1_president]
     print_list(files_names_president)
+
+
+def TF():
+    matrice = []
+    files_names_clean = list_of_files("cleaned", "txt")
+    for fichier_parcouru in files
