@@ -49,5 +49,8 @@ def print_president():
 
 def TF():
     matrice = []
-    files_names_clean = list_of_files("cleaned", "txt")
-    for fichier_parcouru in files
+    files_names_clean = list_of_files(directory, "txt")
+    for nom_fichier_parcouru in files_names_clean:
+        with open('Nomination_Chirac1.txt',"r") as fichier_parcouru:
+            texte = fichier_parcouru.readline()
+            print(texte)
