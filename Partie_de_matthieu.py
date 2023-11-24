@@ -1,4 +1,4 @@
-import os
+import os, math
 
 directory = "speeches-20231119"  # séléction du dossier
 
@@ -68,9 +68,22 @@ def TF():
                             else:  # sinon incrément
                                 selection_case += 1
                         if not verif_present:  # si le mot n'est pas présent dans le tableau
-                            matrice.append([0] * (len(files_names_clean) + 1))  # ajout d'une ligne
+                            matrice.append([0.0] * (len(files_names_clean) + 1))  # ajout d'une ligne
                             matrice[selection_case][
                                 0] = mot_a_tester  # met le mot dans le première case de la ligne pour le répertorier
-                        matrice[selection_case][nom_fichier_parcouru + 1] += 1  # ajoute une ocurence à la bonne case
+                        matrice[selection_case][nom_fichier_parcouru + 1] += 1.0  # ajoute une ocurence à la bonne case
                         mot_a_tester = ""  # réinitialise le mot
+    return matrice
+
+
+def TF_IDF():
+    matrice = TF()
+    for ligne_matrice_parcouru in range(len(matrice)):
+        idf_ligne = 0.0
+        for case_matrice_parcouru in range(1, len(matrice[ligne_matrice_parcouru])):
+            if matrice[ligne_matrice_parcouru][case_matrice_parcouru] != 0:
+                idf_ligne += 1.0
+        idf_ligne = math.log(1.0 / idf_ligne)
+        for case_matrice_parcouru in range(1, len(matrice[ligne_matrice_parcouru])):
+            matrice[ligne_matrice_parcouru][case_matrice_parcouru] = matrice[ligne_matrice_parcouru][case_matrice_parcouru] * idf_ligne
     return matrice
