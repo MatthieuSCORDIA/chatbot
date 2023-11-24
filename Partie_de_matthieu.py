@@ -49,8 +49,25 @@ def print_president():
 
 def TF():
     matrice = []
-    files_names_clean = list_of_files(directory, "txt")
-    for nom_fichier_parcouru in files_names_clean:
-        with open('Nomination_Chirac1.txt',"r") as fichier_parcouru:
-            texte = fichier_parcouru.readline()
-            print(texte)
+    files_names_clean = list_of_files("cleaned", "txt")
+    for nom_fichier_parcouru in range(len(files_names_clean)):
+        with open("cleaned/" + nom_fichier_parcouru[nom_fichier_parcouru], "r") as fichier_parcouru:
+            texte = fichier_parcouru.readlines()
+            for ligne_fichier_parcouru in texte:
+                mot_a_tester = ""
+                for caractere_fichier_parcouru in ligne_fichier_parcouru:
+                    if caractere_fichier_parcouru != " ":
+                        mot_a_tester += caractere_fichier_parcouru
+                    elif mot_a_tester != "":
+                        verif_present = False
+                        selection_case = 0
+                        while selection_case < len(matrice) and not verif_present:
+                            if matrice[selection_case][0] == mot_a_tester:
+                                verif_present=True
+                            else:
+                                selection_case+=1
+                        if not verif_present:
+                            matrice.append([0]*(len(files_names_clean)+1))
+                            matrice[selection_case][0]=mot_a_tester
+                        matrice[selection_case][nom_fichier_parcouru+1]+=1
+                        mot_a_tester=""
