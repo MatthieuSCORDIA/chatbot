@@ -83,7 +83,7 @@ def TF_IDF():
         for case_matrice_parcouru in range(1, len(matrice[ligne_matrice_parcouru])):
             if matrice[ligne_matrice_parcouru][case_matrice_parcouru] != 0:
                 idf_ligne += 1.0
-        idf_ligne = math.log(1.0 / idf_ligne)
+        idf_ligne = math.log((len(matrice[ligne_matrice_parcouru])-1) / idf_ligne +1)
         for case_matrice_parcouru in range(1, len(matrice[ligne_matrice_parcouru])):
             matrice[ligne_matrice_parcouru][case_matrice_parcouru] = matrice[ligne_matrice_parcouru][case_matrice_parcouru] * idf_ligne
     return matrice
