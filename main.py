@@ -62,6 +62,23 @@ while x != 7:
 
         print(list_mots_occurence)
 
+    if x == 4:
+        list_mot_nation = dico_TF["nation"]
+        chronologie_president = [2, 5, 6, 0, 1, 7, 3, 5]
+        i = 0
+        president_patriot = None
+        while president_patriot is None:
+            if list_mot_nation[chronologie_president[i]] != 0:
+                president_patriot = chronologie_president[i]
+            else:
+                i += 1
+            nombre_nation=int(list_mot_nation[chronologie_president[i]])
+        if president_patriot >= 6:
+            president_patriot -= 1
+        if president_patriot >= 1:
+            president_patriot -= 1
+        print("le premier président à parler de la Nation est ", files_names_president[president_patriot], "et il en parle", nombre_nation," fois.")
+
     if x == 5:
         list_mot_ecolo = dico_TF["écologique"]
         list_mot_climat = dico_TF["climat"]
