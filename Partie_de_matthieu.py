@@ -21,8 +21,8 @@ def print_president():
     for boucle1_president in range(len(files_names_president)):
         files_names_president[boucle1_president] = files_names_president[boucle1_president].replace("Nomination_", "")
         files_names_president[boucle1_president] = files_names_president[boucle1_president].replace(".txt", "")
-        files_names_president[boucle1_president] = files_names_president[boucle1_president].replace("1", "")
-        files_names_president[boucle1_president] = files_names_president[boucle1_president].replace("2", "")
+        for boucle2_president in range(10):
+            files_names_president[boucle1_president] = files_names_president[boucle1_president].replace(str(boucle2_president), "")
     boucle1_president = 0
     while boucle1_president < len(files_names_president):
         boucle2_president = 0
@@ -47,42 +47,48 @@ def print_president():
     print_list(files_names_president)
 
 
-def TF():
-    matrice = []  # initialisation de la matrice TF
-    files_names_clean = list_of_files("cleaned", "txt")  # recupération des noms des fichiers dans le dossier clean
+def TF(directory):
+    dico_TF = {}  # initialisation de la matrice TF
+    files_names_clean = list_of_files(directory, "txt")  # recupération des noms des fichiers dans le dossier clean
     for nom_fichier_parcouru in range(len(files_names_clean)):  # parcour chaque fichier 1 à 1
-        with open("cleaned/" + files_names_clean[nom_fichier_parcouru], "r") as fichier_parcouru:
+        with (open("cleaned/" + files_names_clean[nom_fichier_parcouru], "r") as fichier_parcouru):
             texte = fichier_parcouru.readline()  # recupération du texte du fichier
             mot_a_tester = ""
             for caractere_fichier_parcouru in texte:  # parcourt chaque caractère de la ligne
                 if caractere_fichier_parcouru != " ":  # si on a un caractère on le rajoute aux mots
                     mot_a_tester += caractere_fichier_parcouru
                 elif mot_a_tester != "":  # sinon (c'est la fin du mot) on vérifie qu'on a bien un mot
-                    verif_present = False  # pour verifier si le mot est déjà présent dans la matrice
-                    selection_case = 0  # pour selectionner une ligne de la matrice
-                    while selection_case < len(matrice) and not verif_present:
-                        # trouve la ligne où se situe le mot ou trouve qu'il n'est pas dans le tableau
-                        if matrice[selection_case][0] == mot_a_tester:  # verifie si le mot est à cette ligne
-                            verif_present = True
-                        else:  # sinon incrément
-                            selection_case += 1
-                    if not verif_present:  # si le mot n'est pas présent dans le tableau
-                        matrice.append([0.0] * (len(files_names_clean) + 1))  # ajout d'une ligne
-                        matrice[selection_case][0] = mot_a_tester  # met le mot dans le première case de la ligne pour le répertorier
-                        matrice[selection_case][nom_fichier_parcouru + 1] += 1.0  # ajoute une ocurence à la bonne case
+                    mot_a_tester=mot_a_tester.replace("Ã©","é")
+                    mot_a_tester = mot_a_tester.replace("oÃ¹", "à")
+                    if not(mot_a_tester in dico_TF):
+                        dico_TF[mot_a_tester] = [0.0] * (len(files_names_clean))
+                    valeur_temporaire = dico_TF[mot_a_tester]
+                    valeur_temporaire[nom_fichier_parcouru] += 1.0  # ajoute une ocurence à la bonne case
+                    dico_TF[mot_a_tester] = valeur_temporaire
                     mot_a_tester = ""  # réinitialise le mot
-    return matrice
+    return dico_TF
 
-
-def TF_IDF():
-    matrice = TF()
-    for ligne_matrice_parcouru in range(len(matrice)):
+def IDF(directory):
+    dico_TF = TF(directory)
+    dico_IDF = {}
+    for nom_ligne_matrice_parcouru in dico_TF.keys():
         idf_ligne = 0.0
-        for case_matrice_parcouru in range(1, len(matrice[ligne_matrice_parcouru])):
-            if matrice[ligne_matrice_parcouru][case_matrice_parcouru] != 0:
+        ligne_matrice_parcouru=dico_TF[nom_ligne_matrice_parcouru]
+        for case_matrice_parcouru in range(len(ligne_matrice_parcouru)):
+            if ligne_matrice_parcouru[case_matrice_parcouru] != 0:
                 idf_ligne += 1.0
-        idf_ligne = math.log((len(matrice[ligne_matrice_parcouru]) - 1) / idf_ligne)
-        for case_matrice_parcouru in range(1, len(matrice[ligne_matrice_parcouru])):
-            matrice[ligne_matrice_parcouru][case_matrice_parcouru] = matrice[ligne_matrice_parcouru][
-                                                                         case_matrice_parcouru] * idf_ligne
-    return matrice
+        dico_IDF[nom_ligne_matrice_parcouru] = math.log(len(ligne_matrice_parcouru) / idf_ligne)
+    return dico_IDF
+
+
+def TF_IDF(directory):
+    dico_TF = TF(directory)
+    dico_IDF = IDF(directory)
+    dico_TF_IDF = {}
+    for nom_ligne_matrice_parcouru in dico_TF.keys():
+        idf_ligne = dico_IDF[nom_ligne_matrice_parcouru]
+        ligne_matrice_parcouru=dico_TF[nom_ligne_matrice_parcouru]
+        for case_matrice_parcouru in range(len(ligne_matrice_parcouru)):
+            ligne_matrice_parcouru[case_matrice_parcouru] = ligne_matrice_parcouru[case_matrice_parcouru]*idf_ligne
+        dico_TF_IDF[nom_ligne_matrice_parcouru] = ligne_matrice_parcouru
+    return dico_TF_IDF
