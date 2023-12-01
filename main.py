@@ -61,13 +61,6 @@ while x != 7:
 
         print(list_mots_occurence)
 
-    if x==4:
-        list_nation = []
-        occurence=0
-        for key in dico_TF.keys():
-            list_nation=dico_TF[key]
-            if list_nation=="nation":
-
     if x==6:
         list_ref2 = []
         for key in dico_TF_IDF.items():
