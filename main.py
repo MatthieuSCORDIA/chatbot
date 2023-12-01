@@ -24,32 +24,41 @@ while x != 7:
             list_ref = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
             if dico_TF_IDF[key]==list_ref:
                 list_mots_faibles.append(key)
-        print(list_mots_faibles)
+        print("Les mots les moins importants sont :", list_mots_faibles)
 
     if x ==2:
         list_mots_forts=[]
         max=0
         for key in dico_TF_IDF.keys():
             list_test=dico_TF_IDF[key]
-            for i in range(len(list_test)):
-                if list_test[i]>=max:
-                    max=list_test[i]
-                    list_mots_forts.append(key)
-                    list_mots_fort=[]
-                else:
-                    max=max
-        print(list_mots_forts)
+            maxi=list_test[0]
+            for i in range(1, len(list_test)):
+                if maxi<list_test[i]:
+                    maxi=list_test[i]
+            if maxi==max:
+                list_mots_forts.append(key)
+            elif maxi>max:
+                list_mots_forts = []
+                max=maxi
+                list_mots_forts.append(key)
+
+        print("Les mots les plus forts sont :", list_mots_forts)
 
     if x == 3:
         list_mots_occurence = []
         max2 = 0
         for key in dico_TF.keys():
             list_test2 = dico_TF[key]
-            for i in range(2):
-                if list_test2[i] >= max2:
-                    max = list_test2[i]
-                    list_mots_occurence.append(key)
-                    list_mots_occurence = []
-                else:
-                    max2 = max2
+            maxi = list_test2[0]
+            if maxi < list_test2[1]:
+                maxi = list_test2[1]
+            if maxi == max2:
+                list_mots_occurence.append(key)
+            elif maxi > max2:
+                list_mots_occurence = []
+                max2 = maxi
+                list_mots_occurence.append(key)
+
         print(list_mots_occurence)
+
+    if x==4:
