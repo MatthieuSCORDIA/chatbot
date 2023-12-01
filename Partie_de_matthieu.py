@@ -51,7 +51,7 @@ def TF(directory):
     dico_TF = {}  # initialisation de la matrice TF
     files_names_clean = list_of_files(directory, "txt")  # recupération des noms des fichiers dans le dossier clean
     for nom_fichier_parcouru in range(len(files_names_clean)):  # parcour chaque fichier 1 à 1
-        with (open("cleaned/" + files_names_clean[nom_fichier_parcouru], "r") as fichier_parcouru):
+        with open("cleaned/" + files_names_clean[nom_fichier_parcouru], "r") as fichier_parcouru:
             texte = fichier_parcouru.readline()  # recupération du texte du fichier
             mot_a_tester = ""
             for caractere_fichier_parcouru in texte:  # parcourt chaque caractère de la ligne
