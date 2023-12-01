@@ -98,9 +98,9 @@ while x != 7:
         president_écolo=files_names_president[president_écolo]
         print("le premier président à parler du climat et/ou de l’écologie est ", president_écolo)
     if x==6:
-        list_ref2 = []
-        for key in dico_TF_IDF.items():
+        list_mots_simple = []
+        for key in dico_TF_IDF.keys():
             list_ref2 = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
-            if dico_TF_IDF[key]!=list_ref2:
-                list_mots_simple.append(items)
+            if dico_TF_IDF[key] != list_ref2:
+                list_mots_simple.append(key)
         print("Les mots les mots, hormis ceux non importants, des présidents sont :", list_mots_simple)
