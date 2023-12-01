@@ -45,6 +45,7 @@ def print_president():
         elif files_names_president[boucle1_president] == "Sarkozy":
             files_names_president[boucle1_president] = "Nicolas " + files_names_president[boucle1_president]
     print_list(files_names_president)
+    return files_names_president
 
 
 def TF(directory):

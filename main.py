@@ -70,3 +70,17 @@ while x != 7:
 
 
 
+
+
+
+
+
+    if x== 5:
+        list_mot_ecolo=dico_TF["écologie"]
+        list_mot_climat=dico_TF["climat"]
+        chronologie_president = [2, 5, 6, 0, 1, 7, 3, 5]
+        i=0
+        president_écolo = None
+        while president_écolo is None:
+            if list_mot_ecolo[]
+
