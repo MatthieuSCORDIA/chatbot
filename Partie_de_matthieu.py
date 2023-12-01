@@ -1,4 +1,4 @@
-import os
+import os, math
 
 directory = "speeches-20231119"  # séléction du dossier
 
@@ -21,8 +21,8 @@ def print_president():
     for boucle1_president in range(len(files_names_president)):
         files_names_president[boucle1_president] = files_names_president[boucle1_president].replace("Nomination_", "")
         files_names_president[boucle1_president] = files_names_president[boucle1_president].replace(".txt", "")
-        files_names_president[boucle1_president] = files_names_president[boucle1_president].replace("1", "")
-        files_names_president[boucle1_president] = files_names_president[boucle1_president].replace("2", "")
+        for boucle2_president in range(10):
+            files_names_president[boucle1_president] = files_names_president[boucle1_president].replace(str(boucle2_president), "")
     boucle1_president = 0
     while boucle1_president < len(files_names_president):
         boucle2_president = 0
@@ -67,3 +67,28 @@ def TF(directory):
                     dico_TF[mot_a_tester] = valeur_temporaire
                     mot_a_tester = ""  # réinitialise le mot
     return dico_TF
+
+def IDF(directory):
+    dico_TF = TF(directory)
+    dico_IDF = {}
+    for nom_ligne_matrice_parcouru in dico_TF.keys():
+        idf_ligne = 0.0
+        ligne_matrice_parcouru=dico_TF[nom_ligne_matrice_parcouru]
+        for case_matrice_parcouru in range(len(ligne_matrice_parcouru)):
+            if ligne_matrice_parcouru[case_matrice_parcouru] != 0:
+                idf_ligne += 1.0
+        dico_IDF[nom_ligne_matrice_parcouru] = math.log(len(ligne_matrice_parcouru) / idf_ligne)
+    return dico_IDF
+
+
+def TF_IDF(directory):
+    dico_TF = TF(directory)
+    dico_IDF = IDF(directory)
+    dico_TF_IDF = {}
+    for nom_ligne_matrice_parcouru in dico_TF.keys():
+        idf_ligne = dico_IDF[nom_ligne_matrice_parcouru]
+        ligne_matrice_parcouru=dico_TF[nom_ligne_matrice_parcouru]
+        for case_matrice_parcouru in range(len(ligne_matrice_parcouru)):
+            ligne_matrice_parcouru[case_matrice_parcouru] = ligne_matrice_parcouru[case_matrice_parcouru]*idf_ligne
+        dico_TF_IDF[nom_ligne_matrice_parcouru] = ligne_matrice_parcouru
+    return dico_TF_IDF
