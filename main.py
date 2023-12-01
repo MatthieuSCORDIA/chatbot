@@ -1,5 +1,5 @@
 from Partie_de_loic import *  # ajout du travail de Matthieu et Loic
-print_president()  # afficher la liste des présidents
+files_names_president=print_president()  # afficher la liste des présidents
 dico_TF = TF("cleaned")
 dico_IDF = IDF("cleaned")
 dico_TF_IDF = TF_IDF("cleaned")
@@ -68,19 +68,10 @@ while x != 7:
             list_nation=dico_TF[key]
             if list_nation=="nation":
 
-
-
-
-
-
-
-
-    if x== 5:
-        list_mot_ecolo=dico_TF["écologie"]
-        list_mot_climat=dico_TF["climat"]
-        chronologie_president = [2, 5, 6, 0, 1, 7, 3, 5]
-        i=0
-        president_écolo = None
-        while president_écolo is None:
-            if list_mot_ecolo[]
-
+    if x==6:
+        list_ref2 = []
+        for key in dico_TF_IDF.items():
+            list_ref2 = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+            if dico_TF_IDF[key]!=list_ref2:
+                list_mots_simple.append(items)
+        print("Les mots les mots, hormis ceux non importants, des présidents sont :", list_mots_simple)
