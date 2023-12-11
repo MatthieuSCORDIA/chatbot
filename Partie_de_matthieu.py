@@ -22,7 +22,8 @@ def print_president():
         files_names_president[boucle1_president] = files_names_president[boucle1_president].replace("Nomination_", "")
         files_names_president[boucle1_president] = files_names_president[boucle1_president].replace(".txt", "")
         for boucle2_president in range(10):
-            files_names_president[boucle1_president] = files_names_president[boucle1_president].replace(str(boucle2_president), "")
+            files_names_president[boucle1_president] = files_names_president[boucle1_president].replace(
+                str(boucle2_president), "")
     boucle1_president = 0
     while boucle1_president < len(files_names_president):
         boucle2_president = 0
@@ -59,9 +60,9 @@ def TF(directory):
                 if caractere_fichier_parcouru != " ":  # si on a un caractère on le rajoute aux mots
                     mot_a_tester += caractere_fichier_parcouru
                 elif mot_a_tester != "":  # sinon (c'est la fin du mot) on vérifie qu'on a bien un mot
-                    mot_a_tester=mot_a_tester.replace("Ã©","é")
+                    mot_a_tester = mot_a_tester.replace("Ã©", "é")
                     mot_a_tester = mot_a_tester.replace("oÃ¹", "à")
-                    if not(mot_a_tester in dico_TF):
+                    if not (mot_a_tester in dico_TF):
                         dico_TF[mot_a_tester] = [0.0] * (len(files_names_clean))
                     valeur_temporaire = dico_TF[mot_a_tester]
                     valeur_temporaire[nom_fichier_parcouru] += 1.0  # ajoute une ocurence à la bonne case
@@ -69,12 +70,13 @@ def TF(directory):
                     mot_a_tester = ""  # réinitialise le mot
     return dico_TF
 
+
 def IDF(directory):
     dico_TF = TF(directory)
     dico_IDF = {}
     for nom_ligne_matrice_parcouru in dico_TF.keys():
         idf_ligne = 0.0
-        ligne_matrice_parcouru=dico_TF[nom_ligne_matrice_parcouru]
+        ligne_matrice_parcouru = dico_TF[nom_ligne_matrice_parcouru]
         for case_matrice_parcouru in range(len(ligne_matrice_parcouru)):
             if ligne_matrice_parcouru[case_matrice_parcouru] != 0:
                 idf_ligne += 1.0
@@ -88,8 +90,24 @@ def TF_IDF(directory):
     dico_TF_IDF = {}
     for nom_ligne_matrice_parcouru in dico_TF.keys():
         idf_ligne = dico_IDF[nom_ligne_matrice_parcouru]
-        ligne_matrice_parcouru=dico_TF[nom_ligne_matrice_parcouru]
+        ligne_matrice_parcouru = dico_TF[nom_ligne_matrice_parcouru]
         for case_matrice_parcouru in range(len(ligne_matrice_parcouru)):
-            ligne_matrice_parcouru[case_matrice_parcouru] = ligne_matrice_parcouru[case_matrice_parcouru]*idf_ligne
+            ligne_matrice_parcouru[case_matrice_parcouru] = ligne_matrice_parcouru[case_matrice_parcouru] * idf_ligne
         dico_TF_IDF[nom_ligne_matrice_parcouru] = ligne_matrice_parcouru
     return dico_TF_IDF
+
+
+def clean_rep(reponse):
+    for caractere_clean in range(len(reponse)):
+        if 64 < ord(reponse[caractere_clean]) < 91:
+            reponse = reponse[:caractere_clean] + chr(ord(reponse[caractere_clean]) + 32) + reponse[caractere_clean+1:]
+        elif not(96 < ord(reponse[caractere_clean]) < 123):
+            reponse = reponse[:caractere_clean] + " " + reponse[caractere_clean+1:]
+
+    caractere_clean=0
+    while caractere_clean < len(reponse)-1:
+        if reponse[caractere_clean] == reponse[caractere_clean+1] and reponse[caractere_clean] == " ":
+            reponse = reponse[:caractere_clean] + reponse[caractere_clean + 1:]
+        else:
+            caractere_clean += 1
+    return reponse
