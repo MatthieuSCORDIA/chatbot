@@ -40,4 +40,6 @@ def TF_rep(reponse):
 
     return dico_TF_rep
 
+def TF_IDF_rep(reponse):
+    dico_IDF = IDF("cleaned")
 
