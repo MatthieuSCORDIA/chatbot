@@ -40,6 +40,14 @@ def TF_rep(reponse):
 
     return dico_TF_rep
 
-def TF_IDF_rep(reponse):
+def Idem(reponse):
+    dico_TF_rep = TF_rep(reponse)
     dico_IDF = IDF("cleaned")
+    for mot in dico_TF_rep.keys():
+        if not(mot in dico_IDF.keys()):
+            dico_TF_rep[mot] = 0.0
+        else:
+            dico_TF_rep[mot] = dico_TF_rep[mot]*dico_IDF[mot]
+    return dico_TF_rep
+
 
