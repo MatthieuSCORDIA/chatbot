@@ -31,10 +31,8 @@ def TF_rep(reponse):
     mot_a_tester_2="" #init de la variable mot a tester 2 de la reponse
     for caractere_reponse in range(len(reponse)): #Parcourt de chaques caractères de la reponse
         if caractere_reponse != " ": #On prend que les mots
-            mot_a_tester_2 += aractere_reponse #On attribu a mot a tester 2 le mot de la reponse
+            mot_a_tester_2 += caractere_reponse #On attribu a mot a tester 2 le mot de la reponse
         elif mot_a_tester_2 != "" : #Si c'est la fin du mot faire :
-            mot_a_tester_2 = mot_a_tester_2.replace("Ã©", "é") #on modifit les caractères qui n'ont pas été clean a 100%
-            mot_a_tester_2 = mot_a_tester_2.replace("oÃ¹", "à") #on modifit les caractères qui n'ont pas été clean a 100%
             if not (mot_a_tester_2 in dico_TF_rep): #Si le mot n'est pas présent on lui donne pas de score
                 dico_TF_rep[mot_a_tester_2] = [0.0] * (len(reponse))
             val_t = dico_TF_rep[mot_a_tester_2]
