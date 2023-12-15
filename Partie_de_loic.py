@@ -6,7 +6,7 @@ def cleaner():
     files_names = list_of_files(directory, "txt")  # récupération des noms de fichiers
 
     for fichier in files_names:
-        with open(directory+"/"+fichier, "r") as fichier_ouvert, open("cleaned/"+fichier, "w") as fichier_ouvert2:
+        with open(directory+"/"+fichier, "r", encoding="utf-8") as fichier_ouvert, open("cleaned/"+fichier, "w", encoding="utf-8") as fichier_ouvert2:
             textenonclean = fichier_ouvert.readlines()
             for ligne_parcouru in range(len(textenonclean)):
                 textenonclean[ligne_parcouru] = textenonclean[ligne_parcouru].replace("\n", " ")
