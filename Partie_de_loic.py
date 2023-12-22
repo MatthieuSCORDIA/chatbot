@@ -26,4 +26,19 @@ def cleaner():
                 fichier_ouvert2.write(ligne_parcouru)
 
 
+def TF_rep(reponse):
+    dico_TF_rep= {} #initialisation du dictionnaire TF de la réponse
+    mot_a_tester_2="" #init de la variable mot a tester 2 de la reponse
+    for caractere_reponse in range(len(reponse)): #Parcourt de chaques caractères de la reponse
+        if caractere_reponse != " ": #On prend que les mots
+            mot_a_tester_2 += caractere_reponse #On attribu a mot a tester 2 le mot de la reponse
+        elif mot_a_tester_2 != "" : #Si c'est la fin du mot faire :
+            if not (mot_a_tester_2 in dico_TF_rep): #Si le mot n'est pas présent on lui donne pas de score
+                dico_TF_rep[mot_a_tester_2] = [0.0] * (len(reponse))
+            val_t = dico_TF_rep[mot_a_tester_2]
+            val_t [caractere_reponse] += 1.0
+            dico_TF[mot_a_tester_2] = val_t
+            mot_a_tester_2 = ""
+    return dico_TF_rep
+
 
