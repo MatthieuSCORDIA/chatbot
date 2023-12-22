@@ -98,13 +98,13 @@ def TF_IDF(directory):
 def clean_rep(reponse):
     for caractere_clean in range(len(reponse)):
         if 64 < ord(reponse[caractere_clean]) < 91:
-            reponse = reponse[:caractere_clean] + chr(ord(reponse[caractere_clean]) + 32) + reponse[caractere_clean+1:]
-        elif not(96 < ord(reponse[caractere_clean]) < 123):
-            reponse = reponse[:caractere_clean] + " " + reponse[caractere_clean+1:]
+            reponse = reponse[:caractere_clean] + chr(ord(reponse[caractere_clean]) + 32) + reponse[caractere_clean + 1:]
+        elif not (96 < ord(reponse[caractere_clean]) < 123):
+            reponse = reponse[:caractere_clean] + " " + reponse[caractere_clean + 1:]
 
-    caractere_clean=0
-    while caractere_clean < len(reponse)-1:
-        if reponse[caractere_clean] == reponse[caractere_clean+1] and reponse[caractere_clean] == " ":
+    caractere_clean = 0
+    while caractere_clean < len(reponse) - 1:
+        if reponse[caractere_clean] == reponse[caractere_clean + 1] and reponse[caractere_clean] == " ":
             reponse = reponse[:caractere_clean] + reponse[caractere_clean + 1:]
         else:
             caractere_clean += 1
