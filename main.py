@@ -5,6 +5,10 @@ dico_TF = TF("cleaned")
 dico_IDF = IDF("cleaned")
 dico_TF_IDF = TF_IDF("cleaned")
 
+print("")
+print("Posez votre question :")
+question2 = str(input())
+print(reponse_2(question2))
 cleaner()
 
 x = 0
@@ -104,7 +108,3 @@ while x != 7:
                 list_mots_simple.append(key)
         print("Les mots les mots, hormis ceux non importants, des présidents sont :", list_mots_simple)
 
-print("")
-print("Posez votre question :")
-question2 = str(input())
-print(reponse_2(question2))

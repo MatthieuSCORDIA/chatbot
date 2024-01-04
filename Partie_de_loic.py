@@ -62,7 +62,7 @@ question_ref = {    #génération d'une liste pour incrémeneter le texte corres
 def reponse_2(question2):
     mot_1 = question2.split()[0]  # Récupérer le premier mot de la question
     if mot_1 in question_ref:
-        reponse2 = qquestion_ref[mot_1]  # Trouver la réponse correspondante au premier mot
+        reponse2 = question_ref[mot_1]  # Trouver la réponse correspondante au premier mot
     else:
         reponse2 = ""  # Si le premier mot n'est pas trouvé, initialiser la réponse avec une chaîne vide
 
