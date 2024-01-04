@@ -55,20 +55,19 @@ def Idem(reponse):
 question_ref = {    #génération d'une liste pour incrémeneter le texte correspondant a la question
     "Comment": "Après analyse, ",
     "Pourquoi": "Car, ",
-    "Peux-tu": "Oui, bien sûr!"
+    "Peux-tu": "Oui, bien sûr! "
 }
 
 
 def reponse_2(question2):
-    mot_1 = question2.split()[0]  # Récupérer le premier mot de la question
-    if mot_1 in question_ref:
+    mot_1 = question2.split()[0]  # Cette ligne divise la question2 en mots,sélectionne le premier mot.
         reponse2 = question_ref[mot_1]  # Trouver la réponse correspondante au premier mot
     else:
         reponse2 = ""  # Si le premier mot n'est pas trouvé, initialiser la réponse avec une chaîne vide
 
     # Ajouter des réponses personnalisées pour certains types de questions
     if mot_1 == "Peux-tu":
-        reponse2 += "et je songe bien sûr à François Hollande, faisant œuvre de précurseur avec l'accord de Paris sur le climat et protégeant les Français dans un monde frappé par le terrorisme."
+        reponse2 += " Je songe bien sûr à François Hollande, faisant œuvre de précurseur avec l'accord de Paris sur le climat et protégeant les Français dans un monde frappé par le terrorisme."
     elif mot_1 == "Comment":
         reponse2 += "je pense à différentes façons dont cela pourrait être réalisé."
     elif mot_1 == "Pourquoi":
