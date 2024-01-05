@@ -98,7 +98,8 @@ def TF_IDF(directory):
 def clean_rep(reponse):
     for caractere_clean in range(len(reponse)):
         if 64 < ord(reponse[caractere_clean]) < 91:
-            reponse = reponse[:caractere_clean] + chr(ord(reponse[caractere_clean]) + 32) + reponse[caractere_clean + 1:]
+            reponse = reponse[:caractere_clean] + chr(ord(reponse[caractere_clean]) + 32) + reponse[
+                                                                                            caractere_clean + 1:]
         elif not (96 < ord(reponse[caractere_clean]) < 123):
             reponse = reponse[:caractere_clean] + " " + reponse[caractere_clean + 1:]
 
@@ -109,3 +110,24 @@ def clean_rep(reponse):
         else:
             caractere_clean += 1
     return reponse
+
+
+def calcule_similarité(dico_TF_IDF_rep,
+                       dico_TF_IDF):  # Attention! ce code a été optimisé. au lieu de faire une boucle qui parcour 1681
+    # caractères, puisque la majorité des calcules son des additions de 0, on ignore les 0 donc on ignore les mots qui
+    # ne sont pas présent dans la question
+    norme_vec_rep = 0.0  # calcule de la norme du vecteur réponse:
+    for mot_select in dico_TF_IDF_rep.values():
+        norme_vec_rep += mot_select ** 2
+    norme_vec_rep = math.sqrt(norme_vec_rep)
+    similarité = [0.0] * 8
+    for doc_parcouru in range(8):
+        norme_vec_doc = 0.0
+        for mot_select in dico_TF_IDF.values():  # calcule de la norme du vecteur du document
+            norme_vec_doc += mot_select[doc_parcouru] ** 2
+        norme_vec_doc = math.sqrt(norme_vec_rep)
+        for mot_select in dico_TF_IDF_rep.keys():
+            if mot_select in dico_TF_IDF.keys():
+                similarité[doc_parcouru] += dico_TF_IDF_rep[mot_select]*dico_TF_IDF[mot_select][doc_parcouru]
+        similarité[doc_parcouru] = similarité[doc_parcouru]/(norme_vec_rep*norme_vec_doc)
+    return similarité
