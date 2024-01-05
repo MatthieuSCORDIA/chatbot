@@ -113,9 +113,9 @@ def clean_rep(reponse):
 
 
 def calcule_similarité(dico_TF_IDF_rep,
-                       dico_TF_IDF):  # Attention! ce code a été optimisé. au lieu de faire une boucle qui parcour 1681
-    # caractères, puisque la majorité des calcules son des additions de 0, on ignore les 0 donc on ignore les mots qui
-    # ne sont pas présent dans la question
+                       dico_TF_IDF, list_nom_doc=None):
+    if list_nom_doc is None:
+        list_nom_doc = list_of_files("speeches-20231119", "txt")
     norme_vec_rep = 0.0  # calcule de la norme du vecteur réponse:
     for mot_select in dico_TF_IDF_rep.values():
         norme_vec_rep += mot_select ** 2
@@ -126,8 +126,13 @@ def calcule_similarité(dico_TF_IDF_rep,
         for mot_select in dico_TF_IDF.values():  # calcule de la norme du vecteur du document
             norme_vec_doc += mot_select[doc_parcouru] ** 2
         norme_vec_doc = math.sqrt(norme_vec_rep)
-        for mot_select in dico_TF_IDF_rep.keys():
+        for mot_select in dico_TF_IDF_rep.keys():  # calcule produit scalaire
             if mot_select in dico_TF_IDF.keys():
                 similarité[doc_parcouru] += dico_TF_IDF_rep[mot_select]*dico_TF_IDF[mot_select][doc_parcouru]
-        similarité[doc_parcouru] = similarité[doc_parcouru]/(norme_vec_rep*norme_vec_doc)
-    return similarité
+        similarité[doc_parcouru] = similarité[doc_parcouru]/(norme_vec_rep*norme_vec_doc) #calcule similarité
+    doc_sim = 0 # recherche du nom du doc similaire
+    for doc_parcouru in range(1, 8):
+        if similarité[doc_sim] > similarité[doc_parcouru]:
+            doc_sim = doc_parcouru
+    doc_sim = list_nom_doc[doc_sim]
+    return doc_sim
