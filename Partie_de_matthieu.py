@@ -66,6 +66,12 @@ def TF(directory):
                     valeur_temporaire[nom_fichier_parcouru] += 1.0  # ajoute une ocurence à la bonne case
                     dico_TF[mot_a_tester] = valeur_temporaire
                     mot_a_tester = ""  # réinitialise le mot
+            if mot_a_tester != "":  # sinon (c'est la fin du mot) on vérifie qu'on a bien un mot
+                if not (mot_a_tester in dico_TF):
+                    dico_TF[mot_a_tester] = [0.0] * (len(files_names_clean))
+                valeur_temporaire = dico_TF[mot_a_tester]
+                valeur_temporaire[nom_fichier_parcouru] += 1.0  # ajoute une ocurence à la bonne case
+                dico_TF[mot_a_tester] = valeur_temporaire
     return dico_TF
 
 
