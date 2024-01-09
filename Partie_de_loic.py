@@ -59,41 +59,33 @@ question_ref = {    #génération d'une liste pour incrémeneter le texte corres
 }
 
 
-def reponse_2(question2):
+def reponse_2(question2, dico_TF_IDF_rep, doc_parcourir):
     mot_1 = question2.split()[0]  # Cette ligne divise la question2 en mots,sélectionne le premier mot.
+    reponse2 = ""
+    if mot_1 in question_ref.keys():
         reponse2 = question_ref[mot_1]  # Trouver la réponse correspondante au premier mot
-    else:
-        reponse2 = ""  # Si le premier mot n'est pas trouvé, initialiser la réponse avec une chaîne vide
-
-    # Ajouter des réponses personnalisées pour certains types de questions
-    if mot_1 == "Peux-tu":
-        reponse2 += " Je songe bien sûr à François Hollande, faisant œuvre de précurseur avec l'accord de Paris sur le climat et protégeant les Français dans un monde frappé par le terrorisme."
-    elif mot_1 == "Comment":
-        reponse2 += "je pense à différentes façons dont cela pourrait être réalisé."
-    elif mot_1 == "Pourquoi":
-        reponse2 += "il est important de comprendre les raisons qui motivent cette action."
-    else:
-        reponse2 += "Je n'ai pas de réponse spécifique pour cette question."
-
-    # Mettre une majuscule en début de phrase et un point à la fin
-    reponse2 = reponse2.capitalize() + "."
-
+    reponse2 += generation_reponse(dico_TF_IDF_rep, doc_parcourir)
+    reponse2 = reponse2.capitalize() + "." # Mettre une majuscule en début de phrase et un point à la fin
     return reponse2
 
 
 def generation_reponse(dico_TF_IDF_rep, doc_parcourir):
-    mot_important = max(dico_TF_IDF_rep, key=dico_TF_IDF_rep.get)#creation variable mot important
-    with open(directory+"/"+doc_parcourir, "r", encoding="utf-8") as fichier_ouvert :   #ouvrir le dossier texte
-         doc_lecture = fichier_ouvert.read()
-         # Diviser le texte en phrases en utilisant le point comme délimiteur
-         liste1 = doc_lecture.split('.')     #fonction split pour faire un liste avec chaques phrases en point
+     mot_important = max(dico_TF_IDF_rep, key=dico_TF_IDF_rep.get) #creation variable mot important
+     with open(directory+"/"+doc_parcourir, "r", encoding="utf-8") as fichier_ouvert :   #ouvrir le dossier texte
+     doc_lecture = fichier_ouvert.read()
+     liste1 = doc_lecture.split('.') #fonction split pour faire un liste avec chaques phrases en point
          #creation d'une boucle qui clone la liste du dessus en la cleanant (fonction clean_rep)
-         i=0
-         liste_clone = []
-         for y in range(len(liste1)):
-             liste_clone.append(liste1[y])
-             clean_rep(liste_clone[y])
-         
-    return liste1[]
+
+     for y in range (len(liste1)):
+        liste_clone.append(liste1[y])
+        clean_rep(liste_clone)
+     for y in range (len(liste_clone)) :
+         if mot_important in liste_clone[y]:
+             return liste1[y]
+
+
+         #boucle while ou bien for i, qui parcourt chaques phrases de la liste clone clean et compare avec le mot important
+
+    return liste1[y]
 
 
