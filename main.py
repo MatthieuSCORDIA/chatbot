@@ -4,16 +4,11 @@ files_names_president = print_president()  # afficher la liste des présidents
 dico_TF = TF("cleaned")
 dico_IDF = IDF("cleaned")
 dico_TF_IDF = TF_IDF("cleaned")
-
-print("")
-print("Posez votre question :")
-question2 = str(input())
-print(reponse_2(question2))
 cleaner()
 
 x = 0
 
-while x != 7:
+while x != 8:
     x = int(
         input("Si vous voulez afficher la liste des mots les moins importants dans le corpus de documents entrez 1. \n "
               "Si vous voulez afficher le(s) mot(s) ayant le score TD-IDF le plus élevé entrez 2. \n "
@@ -21,30 +16,31 @@ while x != 7:
               "Si vouq voulez indiquer le(s) nom(s) du (des) président(s) qui a (ont) parlé de la « Nation » et celui qui l’a répété le plus de fois entrez 4. \n "
               "Si vous voulez indiquer le premier président à parler du climat et/ou de l’écologie entrez 5. \n "
               "Hormis les mots dits « non importants », Si vous voulez le(s) mot(s) que tous les présidents ont évoqués entrez 6. \n "
-              "Si vous n'avez plus de demandes entrez 7."))
+              "Si vous voulez poser n'importe quelle autres questions entrez 7\n"
+              "Si vous n'avez plus de demandes entrez 8."))
 
     if x == 1:
-        list_mots_faibles=[]
+        list_mots_faibles = []
         for key in dico_TF_IDF.keys():
             list_ref = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
-            if dico_TF_IDF[key]==list_ref:
+            if dico_TF_IDF[key] == list_ref:
                 list_mots_faibles.append(key)
         print("Les mots les moins importants sont :", list_mots_faibles)
 
-    if x ==2:
-        list_mots_forts=[]
-        max=0
+    if x == 2:
+        list_mots_forts = []
+        max = 0
         for key in dico_TF_IDF.keys():
-            list_test=dico_TF_IDF[key]
-            maxi=list_test[0]
+            list_test = dico_TF_IDF[key]
+            maxi = list_test[0]
             for i in range(1, len(list_test)):
-                if maxi<list_test[i]:
-                    maxi=list_test[i]
-            if maxi==max:
+                if maxi < list_test[i]:
+                    maxi = list_test[i]
+            if maxi == max:
                 list_mots_forts.append(key)
-            elif maxi>max:
+            elif maxi > max:
                 list_mots_forts = []
-                max=maxi
+                max = maxi
                 list_mots_forts.append(key)
 
         print("Les mots les plus forts sont :", list_mots_forts)
@@ -76,12 +72,13 @@ while x != 7:
                 president_patriot = chronologie_president[i]
             else:
                 i += 1
-            nombre_nation=int(list_mot_nation[chronologie_president[i]])
+            nombre_nation = int(list_mot_nation[chronologie_president[i]])
         if president_patriot >= 6:
             president_patriot -= 1
         if president_patriot >= 1:
             president_patriot -= 1
-        print("le premier président à parler de la Nation est ", files_names_president[president_patriot], "et il en parle", nombre_nation," fois.")
+        print("le premier président à parler de la Nation est ", files_names_president[president_patriot],
+              "et il en parle", nombre_nation, " fois.")
 
     if x == 5:
         list_mot_ecolo = dico_TF["écologique"]
@@ -98,9 +95,9 @@ while x != 7:
             president_écolo -= 1
         if president_écolo >= 1:
             president_écolo -= 1
-        president_écolo=files_names_president[president_écolo]
+        president_écolo = files_names_president[president_écolo]
         print("le premier président à parler du climat et/ou de l’écologie est ", president_écolo)
-    if x==6:
+    if x == 6:
         list_mots_simple = []
         for key in dico_TF_IDF.keys():
             list_ref2 = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
@@ -108,3 +105,10 @@ while x != 7:
                 list_mots_simple.append(key)
         print("Les mots les mots, hormis ceux non importants, des présidents sont :", list_mots_simple)
 
+    if x == 7:
+        reponse_utilisateur=clean_rep(input("Posez n'importe quelle question:\n"))
+        dico_TF_IDF_rep = Idem(reponse_utilisateur)
+        print("ETAPE 1 effectué:", dico_TF_IDF_rep)
+        doc_parcourir = calcule_similarité(dico_TF_IDF_rep, dico_TF_IDF)
+        print("ETAPE 2 effectué:", doc_parcourir)
+        print(generation_reponse(dico_TF_IDF_rep, doc_parcourir))

@@ -82,24 +82,18 @@ def reponse_2(question2):
 
 
 def generation_reponse(dico_TF_IDF_rep, doc_parcourir):
-    for i in dico_TF_IDF_rep.keys : #chercher le mot le plus important du dico tf idf rep
-        mot_important = max(dico_TF_IDF_rep, key=dico_TF_IDF_rep.get)
-        return mot_important
-        #creation variable mot important
-     with open(directory+"/"+doc_parcourir, "r", encoding="utf-8") as fichier_ouvert :   #ouvrir le dossier texte
+    mot_important = max(dico_TF_IDF_rep, key=dico_TF_IDF_rep.get)#creation variable mot important
+    with open(directory+"/"+doc_parcourir, "r", encoding="utf-8") as fichier_ouvert :   #ouvrir le dossier texte
          doc_lecture = fichier_ouvert.read()
          # Diviser le texte en phrases en utilisant le point comme délimiteur
          liste1 = doc_lecture.split('.')     #fonction split pour faire un liste avec chaques phrases en point
-
          #creation d'une boucle qui clone la liste du dessus en la cleanant (fonction clean_rep)
-         y=0
-         for y in len(liste1):
-             liste_clone.append(liste1[y])
-             clean_rep(liste_clone)
-         #boucle while ou bien for i, qui parcourt chaques phrases de la liste clone clean et compare avec le mot important
          i=0
-         exmple : while not (mot important in liste_clone[i]) :
-                        i+=1
-    return liste1[i]
+         liste_clone = []
+         for y in range(len(liste1)):
+             liste_clone.append(liste1[y])
+             clean_rep(liste_clone[y])
+         
+    return liste1[]
 
 
