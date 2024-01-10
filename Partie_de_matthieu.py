@@ -135,7 +135,10 @@ def calcule_similarité(dico_TF_IDF_rep,
         for mot_select in dico_TF_IDF_rep.keys():  # calcule produit scalaire
             if mot_select in dico_TF_IDF.keys():
                 similarité[doc_parcouru] += dico_TF_IDF_rep[mot_select] * dico_TF_IDF[mot_select][doc_parcouru]
-        similarité[doc_parcouru] = similarité[doc_parcouru] / (norme_vec_rep * norme_vec_doc)  # calcule similarité
+        if norme_vec_rep == 0.0 or norme_vec_doc == 0.0:
+            similarité[doc_parcouru] = 0.0
+        else:
+            similarité[doc_parcouru] = similarité[doc_parcouru] / (norme_vec_rep * norme_vec_doc)  # calcule similarité
     doc_sim = None  # recherche du nom du doc similaire
     mot_important = max(dico_TF_IDF_rep, key=dico_TF_IDF_rep.get)  # creation variable mot important
     dico_TF = TF("cleaned")
