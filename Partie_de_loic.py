@@ -77,7 +77,7 @@ def reponse_2(question2, dico_TF_IDF_rep, doc_parcourir):
     reponse_generer = generation_reponse(dico_TF_IDF_rep, doc_parcourir)
     if reponse_generer is None:
         reponse_generer = "Malheureusement, nous n'avons pas trouvé de réponse à votre question"
-    reponse2 += reponse_generer
+    reponse2 += reponse_generer.replace("\n", "")
     reponse2 = reponse2.capitalize() + "."  # Mettre une majuscule en début de phrase et un point à la fin
     return reponse2
 
