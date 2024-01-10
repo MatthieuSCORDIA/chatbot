@@ -84,15 +84,14 @@ def reponse_2(question2, dico_TF_IDF_rep, doc_parcourir):
 
 def generation_reponse(dico_TF_IDF_rep, doc_parcourir):
     mot_important = max(dico_TF_IDF_rep, key=dico_TF_IDF_rep.get)  # creation variable mot important
-    print(mot_important)
-    print(doc_parcourir)
-    with open(directory + "/" + doc_parcourir, "r", encoding="utf-8") as fichier_ouvert:  # ouvrir le dossier texte
-        doc_lecture = fichier_ouvert.read()
-        liste1 = doc_lecture.split('.')  # fonction split pour faire un liste avec chaques phrases en point
-        liste_clone = []
-        for y in range(len(liste1)):
-            liste_clone.append(liste1[y])
-            liste_clone[y] = clean_rep(liste_clone[y])
-        for y in range(len(liste_clone)):
-            if mot_important in liste_clone[y]:
-                return str(liste1[y])
+    if not (doc_parcourir is None):
+        with open(directory + "/" + doc_parcourir, "r", encoding="utf-8") as fichier_ouvert:  # ouvrir le dossier texte
+            doc_lecture = fichier_ouvert.read()
+            liste1 = doc_lecture.split('.')  # fonction split pour faire un liste avec chaques phrases en point
+            liste_clone = []
+            for y in range(len(liste1)):
+                liste_clone.append(liste1[y])
+                liste_clone[y] = clean_rep(liste_clone[y])
+            for y in range(len(liste_clone)):
+                if mot_important in liste_clone[y]:
+                    return str(liste1[y])
