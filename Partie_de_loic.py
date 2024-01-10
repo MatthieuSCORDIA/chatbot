@@ -49,12 +49,13 @@ def TF_rep(reponse):
         dico_TF_rep[mot_a_tester_2] += 1.0
     return dico_TF_rep
 
+liste_mot_ban = ["comment","pourquoi","qui","qaund"]
 
 def Idem(reponse):
     dico_TF_rep = TF_rep(reponse)
     dico_IDF = IDF("cleaned")
     for mot in dico_TF_rep.keys():
-        if not (mot in dico_IDF.keys()):
+        if not (mot in dico_IDF.keys()) or (mot in liste_mot_ban) :
             dico_TF_rep[mot] = 0.0
         else:
             dico_TF_rep[mot] = dico_TF_rep[mot] * dico_IDF[mot]
@@ -67,30 +68,30 @@ question_ref = {  # génération d'une liste pour incrémeneter le texte corresp
     "peux": "Oui, bien sûr! "
 }
 
-
 def reponse_2(question2, dico_TF_IDF_rep, doc_parcourir):
     mot_1 = question2.split()[0]  # Cette ligne divise la question2 en mots,sélectionne le premier mot.
     reponse2 = ""
     if mot_1 in question_ref.keys():
         reponse2 = question_ref[mot_1]  # Trouver la réponse correspondante au premier mot
     reponse2 = str(reponse2)
-    reponse_générer = generation_reponse(dico_TF_IDF_rep, doc_parcourir)
-    if reponse_générer is None:
-        reponse_générer = "Malheureusement, nous n'avons pas trouvé de réponse à votre question"
-    reponse2 += reponse_générer
+    reponse_generer = generation_reponse(dico_TF_IDF_rep, doc_parcourir)
+    if reponse_generer is None:
+        reponse_generer = "Malheureusement, nous n'avons pas trouvé de réponse à votre question"
+    reponse2 += reponse_generer
     reponse2 = reponse2.capitalize() + "."  # Mettre une majuscule en début de phrase et un point à la fin
     return reponse2
 
 
 def generation_reponse(dico_TF_IDF_rep, doc_parcourir):
     mot_important = max(dico_TF_IDF_rep, key=dico_TF_IDF_rep.get)  # creation variable mot important
-    with open(directory + "/" + doc_parcourir, "r", encoding="utf-8") as fichier_ouvert:  # ouvrir le dossier texte
-        doc_lecture = fichier_ouvert.read()
-        liste1 = doc_lecture.split('.')  # fonction split pour faire un liste avec chaques phrases en point
-        liste_clone = []
-        for y in range(len(liste1)):
-            liste_clone.append(liste1[y])
-            liste_clone[y] = clean_rep(liste_clone[y])
-        for y in range(len(liste_clone)):
-            if mot_important in liste_clone[y]:
-                return str(liste1[y])
+    if not (doc_parcourir is None):
+        with open(directory + "/" + doc_parcourir, "r", encoding="utf-8") as fichier_ouvert:  # ouvrir le dossier texte
+            doc_lecture = fichier_ouvert.read()
+            liste1 = doc_lecture.split('.')  # fonction split pour faire un liste avec chaques phrases en point
+            liste_clone = []
+            for y in range(len(liste1)):
+                liste_clone.append(liste1[y])
+                liste_clone[y] = clean_rep(liste_clone[y])
+            for y in range(len(liste_clone)):
+                if mot_important in liste_clone[y]:
+                    return str(liste1[y])

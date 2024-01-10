@@ -104,11 +104,13 @@ def TF_IDF(directory):
 def clean_rep(reponse):
     for caractere_clean in range(len(reponse)):
         if 64 < ord(reponse[caractere_clean]) < 91:
-            reponse = reponse[:caractere_clean] + chr(ord(reponse[caractere_clean]) + 32) + reponse[
-                                                                                            caractere_clean + 1:]
-        elif not (96 < ord(reponse[caractere_clean]) < 123):
+            reponse = reponse[:caractere_clean] + chr(ord(reponse[caractere_clean]) + 32) + reponse[caractere_clean + 1:]
+        elif 0 <= ord(reponse[caractere_clean]) <= 64:
             reponse = reponse[:caractere_clean] + " " + reponse[caractere_clean + 1:]
-
+        elif 91 <= ord(reponse[caractere_clean]) <= 96:
+            reponse = reponse[:caractere_clean] + " " + reponse[caractere_clean + 1:]
+        elif 123 <= ord(reponse[caractere_clean]) <= 126:
+            reponse = reponse[:caractere_clean] + " " + reponse[caractere_clean + 1:]
     caractere_clean = 0
     while caractere_clean < len(reponse) - 1:
         if reponse[caractere_clean] == reponse[caractere_clean + 1] and reponse[caractere_clean] == " ":
@@ -134,11 +136,20 @@ def calcule_similarité(dico_TF_IDF_rep,
         norme_vec_doc = math.sqrt(norme_vec_rep)
         for mot_select in dico_TF_IDF_rep.keys():  # calcule produit scalaire
             if mot_select in dico_TF_IDF.keys():
-                similarité[doc_parcouru] += dico_TF_IDF_rep[mot_select]*dico_TF_IDF[mot_select][doc_parcouru]
-        similarité[doc_parcouru] = similarité[doc_parcouru]/(norme_vec_rep*norme_vec_doc) #calcule similarité
-    doc_sim = 0 # recherche du nom du doc similaire
-    for doc_parcouru in range(1, 8):
-        if similarité[doc_sim] > similarité[doc_parcouru]:
-            doc_sim = doc_parcouru
-    doc_sim = list_nom_doc[doc_sim]
+                similarité[doc_parcouru] += dico_TF_IDF_rep[mot_select] * dico_TF_IDF[mot_select][doc_parcouru]
+        if norme_vec_rep == 0.0 or norme_vec_doc == 0.0:
+            similarité[doc_parcouru] = 0.0
+        else:
+            similarité[doc_parcouru] = similarité[doc_parcouru] / (norme_vec_rep * norme_vec_doc)  # calcule similarité
+    doc_sim = None  # recherche du nom du doc similaire
+    mot_important = max(dico_TF_IDF_rep, key=dico_TF_IDF_rep.get)  # creation variable mot important
+    dico_TF = TF("cleaned")
+    if mot_important in dico_TF.keys():
+        for doc_parcouru in range(8):
+            verif = dico_TF[mot_important]
+            if (doc_sim is None) and (verif[doc_parcouru] != 0.0):
+                doc_sim = doc_parcouru
+            elif not(doc_sim is None) and (similarité[doc_sim] > similarité[doc_parcouru]) and (verif[doc_parcouru] != 0.0):
+                doc_sim = doc_parcouru
+        doc_sim = list_nom_doc[doc_sim]
     return doc_sim
