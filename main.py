@@ -110,3 +110,4 @@ while x != 8:
         dico_TF_IDF_rep = Idem(reponse_utilisateur)
         doc_parcourir = calcule_similarité(dico_TF_IDF_rep, dico_TF_IDF)
         print(reponse_2(reponse_utilisateur, dico_TF_IDF_rep, doc_parcourir))
+        input("")
